@@ -4,13 +4,15 @@ import {
   OnApplicationBootstrap,
   OnApplicationShutdown,
 } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import * as amqp from 'amqplib';
 
 @Injectable()
 export class DlxService
   implements OnApplicationBootstrap, OnApplicationShutdown
 {
-  private readonly rabbitMQUrl = 'amqp://guest:30052004@localhost';
+  constructor(private readonly configService: ConfigService) {}
+  private readonly rabbitMQUrl = this.configService.getOrThrow('RMQ_URL');
   private connection: amqp.Connection;
   private channel: amqp.Channel;
 

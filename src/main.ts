@@ -8,8 +8,8 @@ async function bootstrap() {
     {
       transport: Transport.RMQ,
       options: {
-        urls: ['amqp://guest:30052004@localhost'],
-        queue: 'noti_queue',
+        urls: [process.env.RMQ_URL],
+        queue: process.env.RMQ_NOTI_QUEUE,
         queueOptions: {
           durable: true,
           arguments: {
